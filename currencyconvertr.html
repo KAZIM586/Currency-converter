@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency converter</title>
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body{
+   
+
+  background-image: linear-gradient(to right,pink,lightyellow)
+}
+      h1{
+        padding-top: 2%;
+        text-align: center;
+        margin-bottom: 1%;
+        color: rgb(204, 54, 79);
+     text-shadow: 2px 3px 5px rgb(80, 73, 73);
+     text-transform: capitalize;
+     font-size: 33px;
+     font-weight: 700;
+    
+      }
+
+      /* contaiiner */ 
+
+      .container{
+        
+        border-radius: 10px;
+        width: 320px;
+        height: 270px;
+        margin: 10% auto;
+        background-color: #c2e5e7;
+        z-index: -1;
+      }
+      .container{
+        box-shadow:8px 9px 10px #408657 ,8px 9px 10px #de09e6;
+      }
+
+      /* amount taken box */
+
+     #amount{
+      width: 90%;
+      font-size: 15px;
+      padding: 8px;
+      margin-bottom: 10px;
+      margin-left: 15px;
+      margin-top: 5px;
+      border-radius: 6px;
+   
+     }
+
+     /* from currency taken box */
+
+     #fomCurrency{
+      padding: 8px;
+      border-radius: 10%;
+      margin-left: 5%;
+     }
+      
+      /* to currency taken box */
+
+     #toCurrency{
+      float: right;
+      padding: 8px;
+      margin-top: -35px;
+      margin-right: 5%;
+      border-radius: 10%;
+     }
+
+     /* button */
+
+     button{
+      padding: 8px;
+      border-radius: 10px;
+      background-color: #10ced4;
+      margin-left: 35%;
+      color: blue;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: 5px 5px 5px rgb(73, 70, 70);
+      border: none;
+     }
+     button:hover{
+      background-color: #408657;
+      color: rgb(114, 57, 116);
+      box-shadow: 5px 5px 5px rgb(168, 41, 141);
+     }
+
+     /* result shown */
+
+     #resultDisplay{
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-top: 25px;
+      background-color: #fff;
+      border-radius: 15px;
+      text-align: center;
+      
+     }
+      
+
+    </style>
+</head>
+<body>
+ 
+    <!-- form -->
+    <div class="container">
+      <h1>Currency converter</h1>
+    <form action="">
+        <input type="number" placeholder="Enter amount" id="amount" required autofocus> </br>
+        <select name="" id="fomCurrency">
+            <option value="">FROM</option>
+            <option value="PKR">PKR</option>
+            <option value="USD">USD</option>
+            <option value="AED">AED</option>
+            <option value="EUR">EUR</option>
+            <option value="INR">INR</option>
+
+        </select> </br>
+      
+        <select name="" id="toCurrency">
+            <option value="">TO</option>
+            <option value="PKR">PKR</option>
+            <option value="USD">USD</option>
+            <option value="AED">AED</option>
+            <option value="EUR">EUR</option>
+            <option value="INR">INR</option>
+
+        </select> </br>
+        <button type="button" onclick="ConvertNow()">Convert Now</button>
+
+    </form>
+    <h3 id="resultDisplay"></h3>
+  </div>
+
+  
+   
+    <!-- script -->
+    <script>
+       
+
+        const ConvertNow=()=>
+        {
+            let amount=parseInt(document.getElementById("amount").value);
+            let fomCurrency=document.getElementById("fomCurrency").value;
+            let toCurrency=document.getElementById("toCurrency").value;
+
+            var myHeaders = new Headers();
+        myHeaders.append("apikey", "SNW21KRTNX1vfySBXNpJhPn9cfBqp3Zq");
+        
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow',
+          headers: myHeaders
+        };
+        
+        fetch("https://api.apilayer.com/exchangerates_data/convert?to=" + toCurrency + "&from=" + fomCurrency + "&amount=" + amount + "", requestOptions)
+          .then(response => response.json())
+        
+          .then(json => {
+            let quotation = json.result;
+           
+            document.getElementById("resultDisplay").innerHTML = amount + " " + fomCurrency + " = " + quotation + " " + toCurrency;
+          })
+          .catch(error => console.log('error', error));
+        }
+
+       
+        </script>
+        
+</body>
+</html>
+
